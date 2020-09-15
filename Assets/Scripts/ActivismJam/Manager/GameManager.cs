@@ -1,6 +1,8 @@
+using Flusk;
+
 namespace DefaultNamespace
 {
-    public class GameManager : UnityEngine.MonoBehaviour
+    public class GameManager : PersistentSingleton<GameManager>
     {
         
     }

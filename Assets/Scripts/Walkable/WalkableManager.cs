@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Flusk;
 using UnityEngine;
 
 namespace Walkable
 {
-    public class WalkableManager : MonoBehaviour
+    public class WalkableManager : PersistentSingleton<WalkableManager>
     {
         [SerializeField]
         protected WalkableBaseSettings settings;
 
-        protected void Awake()
+        private void Start()
         {
-            
+                
         }
     }
 }

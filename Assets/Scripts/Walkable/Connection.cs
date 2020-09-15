@@ -7,8 +7,8 @@ namespace Walkable
     public class Connection : ScriptableObject
     {
         [SerializeField]
-        protected string name;
-        public string Name => name;
+        protected string title;
+        public string Title => title;
 
         [SerializeField]
         protected string id;

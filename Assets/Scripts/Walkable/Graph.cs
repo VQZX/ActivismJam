@@ -8,8 +8,8 @@ namespace Walkable
     public class Graph : ScriptableObject
     {
         [SerializeField]
-        protected string name;
-        public string Name => name;
+        protected string title;
+        public string Title => title;
 
         [SerializeField]
         protected string id;
