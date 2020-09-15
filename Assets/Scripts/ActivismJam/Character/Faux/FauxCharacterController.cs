@@ -39,7 +39,7 @@ namespace ActivismJam.Character.Faux
         {
             currentProgress += Time.deltaTime * speed;
             var nextPosition = Vector3.Lerp(currentOrigin, currentGoal, currentProgress);
-            transform.localPosition = nextPosition;
+            transform.position = nextPosition;
             if (currentProgress >= 1)
             {
                 isMoving = false;
@@ -49,10 +49,10 @@ namespace ActivismJam.Character.Faux
         private void Clicked()
         {
             var mousePosition = Input.mousePosition;
-            var worldPosition = camera.ScreenToViewportPoint(mousePosition);
-            worldPosition.z = transform.localPosition.z;
+            var worldPosition = camera.ScreenToWorldPoint(mousePosition);
+            worldPosition.z = transform.position.z;
 
-            currentOrigin = transform.localPosition;
+            currentOrigin = transform.position;
             currentGoal = worldPosition;
             currentProgress = 0;
             isMoving = true;
