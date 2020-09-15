@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Laser
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Backlayer
   - 
   - 
   - 
@@ -40,4 +42,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3729047363
+    locked: 0
+  - name: Middle Ground
+    uniqueID: 3218375805
+    locked: 0
+  - name: Foreground
+    uniqueID: 2652276351
+    locked: 0
+  - name: Characters
+    uniqueID: 1644490691
     locked: 0
