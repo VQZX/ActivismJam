@@ -10,7 +10,8 @@ namespace ActivismJam.Character.Faux
 
         [SerializeField]
         protected float speed;
-        
+
+        public string id;
 
         private Vector3 currentGoal;
         private Vector3 currentOrigin;

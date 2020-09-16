@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56fd89dc5e7589648865b779ea74cafb, type: 3}
   m_Name: IntroArea_01
   m_EditorClassIdentifier: 
-  title: 
-  id: 
+  title: Intro Area 1
+  id: intro_area_01
   areaPoints: []

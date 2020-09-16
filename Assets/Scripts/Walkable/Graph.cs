@@ -23,5 +23,17 @@ namespace Walkable
 
         [SerializeField]
         protected List<Connection> connections;
+
+        public bool IsPointInside(Vector3 point)
+        {
+            foreach (var area in areas)
+            {
+                if (area.IsPointInside(point))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56fd89dc5e7589648865b779ea74cafb, type: 3}
   m_Name: IntroArea_00
   m_EditorClassIdentifier: 
-  title: 
-  id: 
-  areaPoints: []
+  title: Intro Area
+  id: intro_area_00
+  areaPoints:
+  - {x: 3.0649955, y: 2.276491, z: 0}
+  - {x: 1.8568025, y: 3.9679608, z: 0}
+  - {x: -10.155672, y: -6.66516, z: 0}

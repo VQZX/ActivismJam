@@ -33,40 +33,90 @@ namespace Walkable.Editor
             }
         }
 
-        private void OnSceneGUI()
+        private void OnSceneUpdate(SceneView sceneview)
         {
             if (isEditing)
             {
-                EditorGUI.BeginChangeCheck();
-                var camera = SceneView.GetAllSceneCameras()[0];
-                var length = currentPoints.Count;
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    var mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
-                    mousePosition.z = 0;
-                    if (length == 0)
-                    {
-                        currentPoints.Add(mousePosition);
-                    }
-                }
-
-                if (length > 0)
-                {
-                    for (var i = 0; i < length; i++)
-                    {
-                        var position = currentPoints[i];
-                        currentPoints[i] = Handles.PositionHandle(position, Quaternion.identity);
-                    }
-                }
-                
-                EditorGUI.EndChangeCheck();
+                Editing();
             }
+            else
+            {
+                Viewing();
+            }
+        }
+
+        private void Viewing()
+        {
+            var length = currentPoints.Count;
+            if (length > 0)
+            {
+                for (var i = 0; i < length; i++)
+                {
+                    var position = currentPoints[i];
+                    
+                    Handles.SphereHandleCap(
+                        i,
+                        position,
+                       Quaternion.identity, 
+                        0.1f,
+                        EventType.Repaint
+                    );
+                    
+                    // Connect via lines
+                    if (i != length - 1)
+                    {
+                        Handles.DrawLine(currentPoints[i], currentPoints[i + 1]);
+                    }
+                    else
+                    {
+                        Handles.DrawLine(currentPoints[i], currentPoints[0]);
+                    }
+                }
+            }
+        }
+
+        private void Editing()
+        {
+            EditorGUI.BeginChangeCheck();
+            var camera = SceneView.GetAllSceneCameras()[0];
+            var length = currentPoints.Count;
+            var current = Event.current;
+            if (current.isMouse && current.button == 0 && current.type == EventType.MouseDown)
+            {
+                var mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
+                mousePosition.z = 0;
+                if (length == 0 || !WalkableAreaEditor.IsCloseToAny(mousePosition, currentPoints.ToArray()))
+                {
+                    currentPoints.Add(mousePosition);
+                }
+            }
+
+            if (length > 0)
+            {
+                for (var i = 0; i < length; i++)
+                {
+                    var position = currentPoints[i];
+                    currentPoints[i] = Handles.PositionHandle(position, Quaternion.identity);
+
+                    // Connect via lines
+                    if (i != length - 1)
+                    {
+                        Handles.DrawLine(currentPoints[i], currentPoints[i + 1]);
+                    }
+                    else
+                    {
+                        Handles.DrawLine(currentPoints[i], currentPoints[0]);
+                    }
+                }
+            }
+
+            EditorGUI.EndChangeCheck();
         }
 
         private void OnEditingEnd()
         {
             area.AreaPoints = currentPoints;
+            EditorUtility.SetDirty(area);
         }
 
         private void OnEditingBegin()
@@ -77,6 +127,26 @@ namespace Walkable.Editor
         private void OnEnable()
         {
             area = (Area) target;
+            SceneView.duringSceneGui += OnSceneUpdate;
+        }
+        
+        private void OnDisable()
+        {
+            SceneView.duringSceneGui -= OnSceneUpdate;
+        }
+
+        private static bool IsCloseToAny(Vector3 check, Vector3[] list, float error = 0.1f)
+        {
+            var square = error * error;
+            foreach (var point in list)
+            {
+                var sqrDistance = Vector3.SqrMagnitude(point - check);
+                if (sqrDistance < square)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
