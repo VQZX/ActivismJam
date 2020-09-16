@@ -16,8 +16,15 @@ namespace Walkable
         
         [SerializeField]
         protected List<Vector3> areaPoints;
-
-        [SerializeField]
+        
+        #if UNITY_EDITOR
+        public List<Vector3> AreaPoints
+        {
+            get { return areaPoints; }
+            set { areaPoints = value; }
+        }
+        #endif
+        
         protected List<ConnectionData> connectionData;
     }
 }

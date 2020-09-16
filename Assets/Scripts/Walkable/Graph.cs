@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +13,10 @@ namespace Walkable
         [SerializeField]
         protected string id;
         public string Id => id;
+
+        [SerializeField]
+        protected string scene;
+        public string Scene => scene;
         
         [SerializeField]
         protected List<Area> areas;

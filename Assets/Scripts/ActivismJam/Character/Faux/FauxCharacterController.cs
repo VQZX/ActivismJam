@@ -6,7 +6,7 @@ namespace ActivismJam.Character.Faux
     public class FauxCharacterController : MonoBehaviour
     {
         [SerializeField]
-        protected Camera camera;
+        protected Camera sceneCamera;
 
         [SerializeField]
         protected float speed;
@@ -49,7 +49,7 @@ namespace ActivismJam.Character.Faux
         private void Clicked()
         {
             var mousePosition = Input.mousePosition;
-            var worldPosition = camera.ScreenToWorldPoint(mousePosition);
+            var worldPosition = sceneCamera.ScreenToWorldPoint(mousePosition);
             worldPosition.z = transform.position.z;
 
             currentOrigin = transform.position;
