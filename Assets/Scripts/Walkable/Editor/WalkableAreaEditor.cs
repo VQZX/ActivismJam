@@ -127,6 +127,7 @@ namespace Walkable.Editor
         private void OnEnable()
         {
             area = (Area) target;
+            currentPoints = area.AreaPoints;
             SceneView.duringSceneGui += OnSceneUpdate;
         }
         

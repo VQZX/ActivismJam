@@ -24,16 +24,21 @@ namespace Walkable
         [SerializeField]
         protected List<Connection> connections;
 
+        /// <summary>
+        /// Need to figure out why this is reversed
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public bool IsPointInside(Vector3 point)
         {
             foreach (var area in areas)
             {
                 if (area.IsPointInside(point))
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
 using Flusk;
+using Flusk.Patterns;
 
 namespace DefaultNamespace
 {

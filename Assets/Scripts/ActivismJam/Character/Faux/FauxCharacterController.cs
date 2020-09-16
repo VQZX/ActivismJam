@@ -1,4 +1,4 @@
-using System;
+using ActivismJam.Faux;
 using UnityEngine;
 
 namespace ActivismJam.Character.Faux
@@ -9,14 +9,14 @@ namespace ActivismJam.Character.Faux
         protected Camera sceneCamera;
 
         [SerializeField]
-        protected float speed;
-
-        public string id;
+        protected float speed = 1.0f;
 
         private Vector3 currentGoal;
         private Vector3 currentOrigin;
 
         private float currentProgress;
+
+        private bool canClick = true;
         
         /// <summary>
         /// TODO: Convert this to state machine
@@ -52,6 +52,17 @@ namespace ActivismJam.Character.Faux
             var mousePosition = Input.mousePosition;
             var worldPosition = sceneCamera.ScreenToWorldPoint(mousePosition);
             worldPosition.z = transform.position.z;
+
+            var instance = FauxWalkableManager.Instance;
+            var walkGraph = instance.GraphData.WalkGraph;
+            
+            var isValid = walkGraph.IsPointInside(worldPosition);
+            if (!isValid)
+            {
+                Debug.Log("Not a valid point");
+                return;
+            }
+            Debug.Log("Valid point");
 
             currentOrigin = transform.position;
             currentGoal = worldPosition;

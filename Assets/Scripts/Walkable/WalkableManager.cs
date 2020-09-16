@@ -1,4 +1,4 @@
-﻿using Flusk;
+﻿using Flusk.Patterns;
 using UnityEngine;
 
 namespace Walkable
@@ -7,10 +7,5 @@ namespace Walkable
     {
         [SerializeField]
         protected WalkableBaseSettings settings;
-
-        private void Start()
-        {
-                
-        }
     }
 }

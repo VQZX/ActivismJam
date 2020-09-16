@@ -8,6 +8,8 @@ namespace Walkable
     {
         [SerializeField]
         protected Graph walkGraph;
+
+        public Graph WalkGraph => walkGraph;
         
     }
 }
