@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Flusk.Geometry;
 using UnityEngine;
 
 namespace Walkable
@@ -138,7 +139,64 @@ namespace Walkable
 		        return true; 
 	        } 
 	        return false; 
-        } 
-        
+        }
+
+        // Assume Outside of polygon
+        public Vector3 GetClosestPointOnPolygon(Vector3 point)
+        {
+	        var lines = new List<Line>();
+	        var length = areaPoints.Count;
+	        for (int i = 0; i < length - 1; i++)
+	        {
+		        var a = areaPoints[i];
+		        var b = areaPoints[i + 1];
+		        lines.Add(new Line(a, b));
+		        if (i == length - 2)
+		        {
+			        lines.Add(new Line(areaPoints[length - 1], areaPoints[0]));
+		        }
+	        }
+	        
+	        // Go through the lines and fine smallest distance
+	        var currentClosestPoint = Vector3.one * float.MaxValue;
+	        var currentSmallestDistance = float.MaxValue;
+	        foreach (var line in lines)
+	        {
+		        var pointOnPolygon = line.GetClosestPoint(point);
+		        var distance = Vector3.Distance(point, pointOnPolygon);
+		        if (distance < currentSmallestDistance)
+		        {
+			        currentSmallestDistance = distance;
+			        currentClosestPoint = pointOnPolygon;
+		        }
+	        }
+	        Debug.Log($"Distance: {currentSmallestDistance}, Point: ${currentClosestPoint}");
+	        return currentClosestPoint;
+        }
+
+        public static Vector3 Intersect(Vector3 line1V1, Vector3 line1V2, Vector3 line2V1, Vector3 line2V2)
+        {
+	        //Line1
+	        float A1 = line1V2.y - line1V1.y;
+	        float B1 = line1V2.x - line1V1.x;
+	        float C1 = A1*line1V1.x + B1*line1V1.x;
+
+	        //Line2
+	        float A2 = line2V2.y - line2V1.y;
+	        float B2 = line2V2.x - line2V1.x;
+	        float C2 = A2 * line2V1.x + B2 * line2V1.y;
+
+	        float det = A1*B2 - A2*B1;
+	        if (det == 0)
+	        {
+		        throw new Exception("Parallel Lines do not intersect");
+	        }
+	        else
+	        {
+		        float x = (B2*C1 - B1*C2)/det;
+		        float y = (A1 * C2 - A2 * C1) / det;
+		        return new Vector3(x,y,0);
+	        }
+        }
     }
 }

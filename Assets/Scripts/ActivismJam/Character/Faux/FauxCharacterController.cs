@@ -59,11 +59,9 @@ namespace ActivismJam.Character.Faux
             var isValid = walkGraph.IsPointInside(worldPosition);
             if (!isValid)
             {
-                Debug.Log("Not a valid point");
-                return;
+                worldPosition = walkGraph.GetClosestPointOnGraph(worldPosition);
+                worldPosition.z = 0;
             }
-            Debug.Log("Valid point");
-
             currentOrigin = transform.position;
             currentGoal = worldPosition;
             currentProgress = 0;

@@ -40,5 +40,23 @@ namespace Walkable
             }
             return true;
         }
+
+        public Vector3 GetClosestPointOnGraph(Vector3 point)
+        {
+            // Go through the lines and fine smallest distance
+            var currentClosestPoint = Vector3.one * float.MaxValue;
+            var currentSmallestDistance = float.MaxValue;
+            foreach (var area in areas)
+            {
+                var currentPoint = area.GetClosestPointOnPolygon(point);
+                var distance = Vector3.Distance(point, currentPoint);
+                if (distance < currentSmallestDistance)
+                {
+                    currentSmallestDistance = distance;
+                    currentClosestPoint = currentPoint;
+                }
+            }
+            return currentClosestPoint;
+        }
     }
 }
