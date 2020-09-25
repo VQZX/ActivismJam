@@ -23,6 +23,5 @@ namespace Flusk.Structures
         {
             return (x <= Max && x >= Min);
         }
-
     }
 }

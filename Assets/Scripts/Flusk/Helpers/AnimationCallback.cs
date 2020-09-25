@@ -17,6 +17,5 @@ namespace Flusk.Helpers
             }
             callbacks[i].Invoke();
         }
-        
     }
 }
