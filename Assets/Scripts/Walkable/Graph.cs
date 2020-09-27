@@ -35,10 +35,10 @@ namespace Walkable
             {
                 if (area.IsPointInside(point))
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
 
         public Vector3 GetClosestPointOnGraph(Vector3 point)

@@ -53,7 +53,7 @@ namespace Flusk.Geometry
             return Math.Abs(y - point.y) < float.Epsilon;
         }
 
-        public bool IsPastExtents(Vector2 point, out Vector2 extentsPoint)
+        private bool IsPastExtents(Vector2 point, out Vector2 extentsPoint)
         {
             var xMin = Mathf.Min(A.x, B.x);
             var xMax = Mathf.Max(A.x, B.x);
@@ -105,6 +105,23 @@ namespace Flusk.Geometry
             extentsPoint = Vector2.zero;
             return false;
 
+        }
+
+        public bool IsIntersecting(Line line, ref Vector2 point)
+        {
+            
+            // y = m1x + c1
+            // y = m2x + c2
+            // -------------
+            // m1x + c1 = m2x + c2
+            // x = (c2 - c1)/(m1 - m2)
+            
+            point = new Vector2();
+            point.x = (line.Constant - Constant) / (Gradient - line.Gradient);
+            point.y = Gradient * point.x + Constant;
+            
+            // This is the intersection of the lines, now we check the intersections of the line segments
+            return IsOnLine(point) && line.IsOnLine(point);
         }
 
         private Vector3 ReturnCloseStPointWhenInRange(Vector2 point)
