@@ -85,9 +85,12 @@ namespace Walkable.Editor
             {
                 var mousePosition = camera.ScreenToWorldPoint(Input.mousePosition);
                 mousePosition.z = 0;
+                
+                //TODO: Handle this more elegantly
+                
                 if (length == 0 || !WalkableAreaEditor.IsCloseToAny(mousePosition, currentPoints.ToArray()))
                 {
-                    currentPoints.Add(mousePosition);
+                    //currentPoints.Add(mousePosition);
                 }
             }
 
@@ -136,13 +139,13 @@ namespace Walkable.Editor
             SceneView.duringSceneGui -= OnSceneUpdate;
         }
 
-        private static bool IsCloseToAny(Vector3 check, Vector3[] list, float error = 0.1f)
+        private static bool IsCloseToAny(Vector3 check, Vector3[] list, float error = 0.5f)
         {
-            var square = error * error;
             foreach (var point in list)
             {
                 var sqrDistance = Vector3.SqrMagnitude(point - check);
-                if (sqrDistance < square)
+                //Debug.Log($"Check: ${check}, Point: ${point} Distance: {sqrDistance}");
+                if (sqrDistance < error)
                 {
                     return true;
                 }
