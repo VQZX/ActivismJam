@@ -1,7 +1,6 @@
-using Flusk;
 using Flusk.Patterns;
 
-namespace DefaultNamespace
+namespace ActivismJam.Manager
 {
     public class GameManager : PersistentSingleton<GameManager>
     {
