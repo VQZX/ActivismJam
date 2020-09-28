@@ -51,7 +51,8 @@ namespace ActivismJam.Character.Faux
         {
             var mousePosition = Input.mousePosition;
             var worldPosition = sceneCamera.ScreenToWorldPoint(mousePosition);
-            worldPosition.z = transform.position.z;
+            var worldPositionZ = transform.position.z;
+            worldPosition.z = worldPositionZ;
 
             var instance = FauxWalkableManager.Instance;
             var walkGraph = instance.GraphData.WalkGraph;
@@ -59,9 +60,11 @@ namespace ActivismJam.Character.Faux
             var isValid = walkGraph.IsPointInside(worldPosition);
             if (!isValid)
             {
+                // Find closest point to edge of area if not inside graph
                 worldPosition = walkGraph.GetClosestPointOnGraph(worldPosition);
-                worldPosition.z = 0;
+                worldPosition.z = worldPositionZ;
             }
+   
             currentOrigin = transform.position;
             currentGoal = worldPosition;
             currentProgress = 0;

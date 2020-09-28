@@ -49,27 +49,25 @@ namespace Walkable
 	        
 	        if (IsIntersectingWithLines(line, ref amountOfLine))
 	        {
-		        Debug.Log("Amount Of Lines "+amountOfLine);
 		        return amountOfLine % 2 == 1;
 	        }
-	        Debug.Log("Point not inside");
 	        return false;
         }
 
         private bool IsIntersectingWithLines(Line lineA, ref int amount)
         {
-	        bool isIntersecting = false;
+	        var isIntersecting = false;
 	        CreateLines();
-	        Debug.Log("Line count "+lines.Count);
 	        foreach (var line in lines)
 	        {
-		        Vector2 point = Vector2.zero;
-		        if (lineA.IsIntersecting(line, ref point))
+		        var point = Vector2.zero;
+		        if (!lineA.IsIntersecting(line, ref point))
 		        {
-			        isIntersecting = true;
-			        amount++;
-			        Debug.LogFormat($"Intersecting: {isIntersecting} -- Times: {amount}");
+			        continue;
 		        }
+
+		        isIntersecting = true;
+		        amount++;
 	        }
 	        return isIntersecting;
         }
@@ -105,7 +103,6 @@ namespace Walkable
 			        currentClosestPoint = pointOnPolygon;
 		        }
 	        }
-	        Debug.Log($"Distance: {currentSmallestDistance}, Point: ${currentClosestPoint}");
 	        return currentClosestPoint;
         }
 
